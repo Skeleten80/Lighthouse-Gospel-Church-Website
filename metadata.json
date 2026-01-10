@@ -1,0 +1,7 @@
+{
+  "name": "Lighthouse Gospel Church",
+  "description": "A modern, glassy church website inspired by future macOS aesthetics, featuring sermons, events, giving, and community connection tools.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
