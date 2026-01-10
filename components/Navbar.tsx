@@ -98,9 +98,7 @@ export const Navbar: React.FC = () => {
           
           <div className="h-6 w-[1px] bg-black/10 dark:bg-white/10 mx-1 hidden md:block" />
 
-          <Link to="/giving" className="hidden lg:flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black px-5 py-2 rounded-xl text-sm font-bold hover:opacity-90 transition-all active:scale-95 shadow-lg shadow-black/10">
-            Give
-          </Link>
+          {/* Give button removed from here for desktop mode */}
 
           {/* Mobile Menu Toggle */}
           <button 
