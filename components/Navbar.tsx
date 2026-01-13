@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
         ${scrolled ? 'scale-[0.98]' : 'scale-100'}
       `}>
         {/* Logo Section with Glow Effect */}
-        <Link to="/" className="flex items-center gap-3 group pl-2">
+        <Link to="/" className="flex items-center gap-3 group pl-2 transition-all duration-500">
           <div className="relative">
             {/* Logo Glow Aura - Triggers on group hover */}
             <div className="absolute inset-0 bg-blue-500/60 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-apple scale-150" />
@@ -97,8 +97,6 @@ export const Navbar: React.FC = () => {
           </button>
           
           <div className="h-6 w-[1px] bg-black/10 dark:bg-white/10 mx-1 hidden md:block" />
-
-          {/* Give button removed from here for desktop mode */}
 
           {/* Mobile Menu Toggle */}
           <button 

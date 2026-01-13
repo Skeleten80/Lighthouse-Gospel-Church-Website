@@ -30,8 +30,8 @@ export const Services: React.FC = () => {
           },
           {
             icon: <Users className="text-orange-500" />,
-            title: "Inclusive Community",
-            desc: "A diverse family where people of all backgrounds and stories find a place to belong."
+            title: "Loving Community",
+            desc: "A diverse family where people of all backgrounds and stories find a place to belong through Christ's love."
           }
         ].map((item, i) => (
           <GlassCard key={i} className="text-center space-y-4 py-12">
