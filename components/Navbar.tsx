@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Church, Menu, X, Sun, Moon } from 'lucide-react';
+import { Lightbulb as Lighthouse, Menu, X, Sun, Moon } from 'lucide-react';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -47,7 +47,7 @@ export const Navbar: React.FC = () => {
         rounded-[24px] transition-all duration-500 ease-apple
         ${scrolled ? 'scale-[0.98]' : 'scale-100'}
       `}>
-        {/* Logo Section with Glow Effect */}
+        {/* Logo Section with Lighthouse Glow Effect */}
         <Link to="/" className="flex items-center gap-3 group pl-2 transition-all duration-500">
           <div className="relative">
             {/* Logo Glow Aura - Triggers on group hover */}
@@ -55,7 +55,7 @@ export const Navbar: React.FC = () => {
             <div className="absolute inset-0 bg-indigo-500/40 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-apple scale-110" />
             
             <div className="relative p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg transition-all duration-500 ease-apple group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] group-active:scale-95">
-              <Church className="text-white w-5 h-5 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+              <Lighthouse className="text-white w-5 h-5 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
             </div>
           </div>
           <div className="flex flex-col -space-y-1">
