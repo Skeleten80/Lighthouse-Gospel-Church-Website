@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { GlassCard } from '../components/GlassCard';
-import { Heart, ShieldCheck, Users, Zap, ScrollText, Cross, Flame, Book, Sun, UserPlus, Scale, Sparkles, Droplets, ArrowUpCircle, AlertTriangle, Calendar, Building2, Infinity } from 'lucide-react';
+import { Heart, ShieldCheck, Users, Zap, ScrollText, Cross, Flame, Book, Sun, UserPlus, Scale, Sparkles, Droplets, ArrowUpCircle, AlertTriangle, Calendar, Building2, Infinity, Instagram, Linkedin, Mail } from 'lucide-react';
 
 const statementOfFaith = [
   {
@@ -53,43 +53,43 @@ const statementOfFaith = [
     title: "Salvation",
     icon: <ShieldCheck className="text-green-500" size={20} />,
     content: "We believe that men are justified by grace through faith in the shed blood of the Lord Jesus Christ without any mixture of works. (John 3:16; 5:24; Acts 13:39; Romans 3:24, 28; 5:1; 10:9-13; Gal. 2:16; Eph. 2:8, 9; Titus 3:7)"
-  },
-  {
-    title: "Ordinances",
-    icon: <Droplets className="text-blue-400" size={20} />,
-    content: "We believe in the ordinance of water baptism upon the confession of faith and the ordinance of communion. (Matthew 28:19; Acts 2:38; Romans 6:3-5; Matthew 26:26-28; 1 Cor. 11:23-28)"
-  },
-  {
-    title: "Rapture",
-    icon: <ArrowUpCircle className="text-purple-500" size={20} />,
-    content: "We believe in the bodily return of the Lord Jesus Christ for His Church. (Acts 1:11; Matthew 24:30, 31; 1 Thess. 4:16,17; 2 Thess 1:10; Revelation 1:7)"
-  },
-  {
-    title: "Resurrection",
-    icon: <Flame className="text-red-600" size={20} />,
-    content: "We believe in the resurrection of both the saved and the lost; the just unto the resurrection of life eternal and the lost unto eternal damnation. (Luke 14:14; John 5:29; Revelation 20:5, 6; 21:8)"
-  },
-  {
-    title: "Judgement",
-    icon: <AlertTriangle className="text-orange-600" size={20} />,
-    content: "We believe that God judged the world in the days of Noah by a worldwide flood and that the world that now is will be destroyed by fire. (Genesis 6:17; 2 Peter 3:7, 10)"
-  },
-  {
-    title: "Marriage",
-    icon: <Infinity className="text-amber-500" size={20} />,
-    content: "We believe in the covenant of marriage as the union of one man and one woman for life to the exclusion of all other. (Genesis 2:24; Matthew 19:5, 6; Malachi 2:14-16)"
-  },
-  {
-    title: "Lord’s Day",
-    icon: <Calendar className="text-blue-600" size={20} />,
-    content: "We believe in gathering for worship and fellowship on Sunday–the first day of the week. (Mark 16:9; Acts 20:7; 1 Cor. 16:2; Rev. 1:10)"
-  },
-  {
-    title: "Civil Government",
-    icon: <Building2 className="text-stone-500" size={20} />,
-    content: "We believe that Civil government is of divine appointment and that authorities are to be prayed for, honoured and obeyed except in things opposed to the will of our Lord. (Romans 13:1-7; 1 Timothy 2:1-2)"
   }
 ];
+
+interface LeaderProps {
+  name: string;
+  role: string;
+  glow: string;
+  accent: string;
+}
+
+const LeadershipCard: React.FC<LeaderProps> = ({ name, role, glow, accent }) => (
+  <div className="relative group">
+    <div className={`absolute -inset-1 bg-gradient-to-br ${glow} to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+    <GlassCard className="relative py-12 px-8 text-center overflow-hidden border-black/10 dark:border-white/20 bg-white/60 dark:bg-black/40 backdrop-blur-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] h-full flex flex-col">
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 ${accent} rounded-b-full scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+      <div className="relative mb-8 flex-1">
+        <h4 className="text-xl font-bold text-black dark:text-white transition-colors duration-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 leading-tight">
+          {name}
+        </h4>
+        <p className="text-black/50 dark:text-white/40 text-[10px] font-black uppercase tracking-[0.2em] mt-3">
+          {role}
+        </p>
+      </div>
+      <div className="flex justify-center gap-3 mt-auto pt-4 border-t border-black/5 dark:border-white/5 opacity-40 group-hover:opacity-100 transition-all duration-500">
+        <button className="p-2 bg-black/5 dark:bg-white/10 rounded-xl hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-90">
+          <Instagram size={14} />
+        </button>
+        <button className="p-2 bg-black/5 dark:bg-white/10 rounded-xl hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-90">
+          <Linkedin size={14} />
+        </button>
+        <button className="p-2 bg-black/5 dark:bg-white/10 rounded-xl hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-90">
+          <Mail size={14} />
+        </button>
+      </div>
+    </GlassCard>
+  </div>
+);
 
 export const About: React.FC = () => {
   return (
@@ -102,30 +102,64 @@ export const About: React.FC = () => {
       </section>
 
       {/* Leadership Section */}
-      <section className="space-y-10">
-        <h2 className="text-4xl font-bold text-black dark:text-white text-center transition-colors duration-500">Meet Our Leadership</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { name: "Pastor Pedro Neufeld", role: "Lead Pastor", img: "https://picsum.photos/seed/pedro/400/400" },
-            { name: "Willie Braun", role: "Worship Leader", img: "https://picsum.photos/seed/willie/400/400" },
-            { name: "Marcus Thorne", role: "Youth Leader", img: "https://picsum.photos/seed/marcus/400/400" },
-            { name: "Elena Rodriguez", role: "Community Outreach", img: "https://picsum.photos/seed/elena/400/400" }
-          ].map((leader, i) => (
-            <GlassCard key={i} className="p-0 overflow-hidden text-center group">
-              <img src={leader.img} alt={leader.name} className="w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-              <div className="p-6">
-                <h4 className="text-lg font-bold text-black dark:text-white transition-colors duration-500">{leader.name}</h4>
-                <p className="text-blue-600 dark:text-blue-400 text-sm font-medium transition-colors duration-500">{leader.role}</p>
-              </div>
-            </GlassCard>
-          ))}
+      <section className="space-y-24">
+        {/* Pastoral Team */}
+        <div className="space-y-10">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-blue-600 dark:text-blue-400 text-[10px] font-black tracking-widest uppercase">The Heart of our Church</span>
+            <h2 className="text-4xl font-bold text-black dark:text-white text-center transition-colors duration-500 tracking-tight">Pastoral Team</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <LeadershipCard name="Pastor Pedro Neufeld" role="Lead Pastor" glow="from-blue-500/20" accent="bg-blue-500/50" />
+            <LeadershipCard name="Willie Braun" role="Worship Leader" glow="from-purple-500/20" accent="bg-purple-500/50" />
+            <LeadershipCard name="Marcus Thorne" role="Youth Leader" glow="from-indigo-500/20" accent="bg-indigo-500/50" />
+            <LeadershipCard name="Elena Rodriguez" role="Community Outreach" glow="from-emerald-500/20" accent="bg-emerald-500/50" />
+          </div>
+        </div>
+
+        {/* Elders */}
+        <div className="space-y-10">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-amber-600 dark:text-amber-400 text-[10px] font-black tracking-widest uppercase">Spiritual Oversight</span>
+            <h2 className="text-4xl font-bold text-black dark:text-white text-center transition-colors duration-500 tracking-tight">Our Elders</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <LeadershipCard name="Johnathan Wick" role="Elder of Fellowship" glow="from-amber-500/15" accent="bg-amber-500/50" />
+            <LeadershipCard name="Samuel Peters" role="Elder of Education" glow="from-amber-500/15" accent="bg-amber-500/50" />
+            <LeadershipCard name="David Miller" role="Elder of Stewardship" glow="from-amber-500/15" accent="bg-amber-500/50" />
+          </div>
+        </div>
+
+        {/* Deacons */}
+        <div className="space-y-10">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-slate-500 dark:text-slate-400 text-[10px] font-black tracking-widest uppercase">Service & Logistics</span>
+            <h2 className="text-4xl font-bold text-black dark:text-white text-center transition-colors duration-500 tracking-tight">The Deacons</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <LeadershipCard name="Robert Chen" role="Facility Deacon" glow="from-slate-500/15" accent="bg-slate-500/50" />
+            <LeadershipCard name="Thomas Wright" role="Benevolence Deacon" glow="from-slate-500/15" accent="bg-slate-500/50" />
+            <LeadershipCard name="Mark Jansen" role="Hospitality Deacon" glow="from-slate-500/15" accent="bg-slate-500/50" />
+            <LeadershipCard name="Sarah Klassen" role="Admin Deacon" glow="from-slate-500/15" accent="bg-slate-500/50" />
+          </div>
+        </div>
+
+        {/* Ministry Couples */}
+        <div className="space-y-10">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-rose-500 dark:text-rose-400 text-[10px] font-black tracking-widest uppercase">Family & Life</span>
+            <h2 className="text-4xl font-bold text-black dark:text-white text-center transition-colors duration-500 tracking-tight">Ministry Couples</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <LeadershipCard name="Jacob & Maria Neufeld" role="Marriage Ministry" glow="from-rose-500/15" accent="bg-rose-500/50" />
+            <LeadershipCard name="Peter & Anna Sawatzky" role="Young Couples Ministry" glow="from-rose-500/15" accent="bg-rose-500/50" />
+          </div>
         </div>
       </section>
 
       {/* Values Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <GlassCard className="p-10">
-          {/* Centered Heading at the top */}
           <div className="flex flex-col items-center text-center space-y-4 mb-12">
             <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center shadow-lg">
               <ShieldCheck className="text-blue-600 dark:text-blue-400 w-10 h-10" />
@@ -144,7 +178,7 @@ export const About: React.FC = () => {
               <div className="space-y-1">
                 <p className="text-black dark:text-white font-bold text-lg">1. Christ-Centeredness</p>
                 <p className="text-black/70 dark:text-white/70 text-sm leading-relaxed transition-colors duration-500">
-                  We commit to keeping the person, teachings, and lordship of Jesus at the center of everything we do. Our identity is rooted in Him, and our mission is directed by His Spirit.
+                  We commit to keeping the person, teachings, and lordship of Jesus at the center of everything we do.
                 </p>
               </div>
             </li>
@@ -157,7 +191,7 @@ export const About: React.FC = () => {
               <div className="space-y-1">
                 <p className="text-black dark:text-white font-bold text-lg">2. Authentic Community</p>
                 <p className="text-black/70 dark:text-white/70 text-sm leading-relaxed transition-colors duration-500">
-                  We believe faith is lived out together. Through radical hospitality and mutual support, we create a space where everyone belongs, reflecting the inclusive love of Christ in our daily lives.
+                  Through radical hospitality, we create a space where everyone belongs, reflecting the inclusive love of Christ.
                 </p>
               </div>
             </li>
@@ -170,7 +204,7 @@ export const About: React.FC = () => {
               <div className="space-y-1">
                 <p className="text-black dark:text-white font-bold text-lg">3. Lifestyle Worship</p>
                 <p className="text-black/70 dark:text-white/70 text-sm leading-relaxed transition-colors duration-500">
-                  We define worship as more than a Sunday service; it is our whole-life response to God’s grace. We honor Him through our songs, our work, our relationships, and our service to the world.
+                  Worship is our whole-life response to God’s grace—in our songs, our work, and our relationships.
                 </p>
               </div>
             </li>
@@ -184,7 +218,7 @@ export const About: React.FC = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2 transition-colors duration-500">Strong Community</h3>
-              <p className="text-black/60 dark:text-white/60 transition-colors duration-500">We believe spiritual growth happens best in circles, not just rows. Our small groups are the heartbeat of our church.</p>
+              <p className="text-black/60 dark:text-white/60 transition-colors duration-500">Spiritual growth happens best in circles. Our small groups are the heartbeat of our church.</p>
             </div>
           </GlassCard>
           
@@ -194,7 +228,7 @@ export const About: React.FC = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2 transition-colors duration-500">Spiritual Growth</h3>
-              <p className="text-black/60 dark:text-white/60 transition-colors duration-500">Equipping every believer with the tools to live out their faith boldly and effectively in today's world.</p>
+              <p className="text-black/60 dark:text-white/60 transition-colors duration-500">Equipping believers with the tools to live out their faith boldly in today's world.</p>
             </div>
           </GlassCard>
         </div>
@@ -207,7 +241,7 @@ export const About: React.FC = () => {
             <ScrollText size={16} /> Foundations
           </div>
           <h2 className="text-5xl font-bold text-black dark:text-white transition-colors duration-500">Statement of Faith</h2>
-          <p className="text-black/50 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-500">The foundational truths that guide our worship, our teaching, and our community life.</p>
+          <p className="text-black/50 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-500">Foundational truths that guide our worship and our community life.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

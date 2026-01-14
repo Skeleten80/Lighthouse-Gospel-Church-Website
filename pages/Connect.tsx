@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { Send, MapPin, Phone, Mail, Instagram, Twitter, Facebook, CheckCircle2 } from 'lucide-react';
 
@@ -9,6 +9,7 @@ export const Connect: React.FC = () => {
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showResetLink, setShowResetLink] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -31,13 +32,27 @@ export const Connect: React.FC = () => {
     });
   };
 
+  // Handle the delay for the reset option
+  useEffect(() => {
+    let timer: number;
+    if (isSubmitted) {
+      setShowResetLink(false);
+      timer = window.setTimeout(() => {
+        setShowResetLink(true);
+      }, 1500); // 1.5 second delay
+    }
+    return () => clearTimeout(timer);
+  }, [isSubmitted]);
+
   return (
     <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="space-y-12">
           <div className="space-y-4">
-            <h1 className="text-5xl font-bold text-black dark:text-white">Let's Connect</h1>
-            <p className="text-xl text-black/60 dark:text-white/60 transition-colors duration-500">We'd love to hear from you. Whether you have a question, need prayer, or want to volunteer, we're here.</p>
+            <h1 className="text-5xl font-bold text-black/90 dark:text-white/90 tracking-tight">Let's Connect</h1>
+            <p className="text-xl text-black/75 dark:text-white/75 transition-colors duration-500 leading-relaxed">
+              We'd love to hear from you. Whether you have a question, need prayer, or want to volunteer, we're here.
+            </p>
           </div>
 
           <div className="space-y-6">
@@ -89,7 +104,7 @@ export const Connect: React.FC = () => {
           </div>
         </div>
 
-        <GlassCard className="p-8 min-h-[500px] flex flex-col">
+        <GlassCard className="p-8 min-h-[500px] flex flex-col overflow-hidden">
           {!isSubmitted ? (
             <form className="space-y-6 animate-apple-fade-in" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -152,25 +167,36 @@ export const Connect: React.FC = () => {
                 ></textarea>
               </div>
 
-              <button type="submit" className="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-xl">
+              <button type="submit" className="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-xl active:scale-95">
                 Send Message <Send size={18} />
               </button>
             </form>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 animate-apple-fade-in">
-              <div className="p-6 bg-green-500/20 rounded-full animate-subtle-float">
-                <CheckCircle2 size={48} className="text-green-600 dark:text-green-400" />
+            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-8 animate-apple-fade-in relative">
+              <div className="p-8 bg-green-500/10 dark:bg-green-500/20 rounded-[32px] border border-green-500/20 shadow-inner group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 pointer-events-none" />
+                <CheckCircle2 size={64} className="text-green-600 dark:text-green-400 relative z-10 animate-subtle-float" />
               </div>
-              <div className="space-y-2">
-                <h3 className="text-3xl font-bold text-black dark:text-white">Message Sent!</h3>
-                <p className="text-black/60 dark:text-white/60 max-w-xs">Thank you for reaching out. A member of our team will be in touch with you shortly.</p>
+              
+              <div className="space-y-3 px-4">
+                <h3 className="text-4xl font-bold text-black dark:text-white tracking-tight animate-apple-fade-in" style={{ animationDelay: '200ms' }}>
+                  Message Sent!
+                </h3>
+                <p className="text-black/60 dark:text-white/60 max-w-xs mx-auto leading-relaxed animate-apple-fade-in" style={{ animationDelay: '400ms' }}>
+                  Thank you for reaching out to Lighthouse Gospel. A member of our team will review your message and connect with you shortly.
+                </p>
               </div>
-              <button 
-                onClick={() => setIsSubmitted(false)}
-                className="text-blue-600 dark:text-blue-400 font-bold hover:underline transition-all"
+
+              <div 
+                className={`transition-all duration-700 transform ${showResetLink ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95 pointer-events-none'}`}
               >
-                Send another message
-              </button>
+                <button 
+                  onClick={() => setIsSubmitted(false)}
+                  className="px-8 py-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-blue-600 dark:text-blue-400 font-bold hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-90"
+                >
+                  Send another message
+                </button>
+              </div>
             </div>
           )}
         </GlassCard>
