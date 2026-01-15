@@ -105,8 +105,8 @@ export const Home: React.FC = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight">Join Us This Sunday</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { time: "09:00 AM", label: "Traditional Worship", location: "Main Sanctuary" },
-            { time: "11:00 AM", label: "Contemporary Worship", location: "The Hall & Online" },
+            { time: "09:00 AM", label: "First Service", location: "Main Sanctuary" },
+            { time: "11:00 AM", label: "Second Service", location: "Main Sanctuary" },
             { time: "06:00 PM", label: "Youth & Young Adults", location: "Lower Studio" }
           ].map((s, i) => (
             <GlassCard key={i} className="py-10">

@@ -55,12 +55,12 @@ export const Services: React.FC = () => {
               <p className="text-black/70 dark:text-white/80 mb-6">Experience the warmth of community and the power of shared worship in our sanctuary.</p>
               <div className="flex flex-col gap-2 mb-6">
                 <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
-                  <span className="text-black/60 dark:text-white/60">Sunday Morning</span>
-                  <span className="text-black dark:text-white font-bold">9am & 11am</span>
+                  <span className="text-black/60 dark:text-white/60">First Service</span>
+                  <span className="text-black dark:text-white font-bold">9:00 AM</span>
                 </div>
                 <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
-                  <span className="text-black/60 dark:text-white/60">Midweek Prayer</span>
-                  <span className="text-black dark:text-white font-bold">Wed 7pm</span>
+                  <span className="text-black/60 dark:text-white/60">Second Service</span>
+                  <span className="text-black dark:text-white font-bold">11:00 AM</span>
                 </div>
               </div>
               <a 
