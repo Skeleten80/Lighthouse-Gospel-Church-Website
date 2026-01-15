@@ -62,7 +62,7 @@ export const Connect: React.FC = () => {
               rel="noopener noreferrer" 
               className="flex items-start gap-6 group hover-mail-pop cursor-pointer"
             >
-              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-blue-500/10 group-hover:border-blue-500/30 animate-subtle-float" style={{ animationDelay: '0s' }}>
+              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-blue-500/10 group-hover:border-blue-500/30">
                 <MapPin className="text-blue-600 dark:text-blue-400" />
               </div>
               <div>
@@ -75,7 +75,7 @@ export const Connect: React.FC = () => {
               href={`mailto:${email}`}
               className="flex items-start gap-6 group hover-mail-pop"
             >
-              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-purple-500/10 group-hover:border-purple-500/30 animate-subtle-float" style={{ animationDelay: '0.5s' }}>
+              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-purple-500/10 group-hover:border-purple-500/30">
                 <Mail className="text-purple-600 dark:text-purple-400" />
               </div>
               <div>
@@ -85,7 +85,7 @@ export const Connect: React.FC = () => {
             </a>
 
             <div className="flex items-start gap-6 group hover-ring">
-              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-orange-500/10 group-hover:border-orange-500/30 animate-subtle-float" style={{ animationDelay: '1s' }}>
+              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-orange-500/10 group-hover:border-orange-500/30">
                 <Phone className="text-orange-600 dark:text-orange-400" />
               </div>
               <div>
@@ -175,7 +175,7 @@ export const Connect: React.FC = () => {
             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-8 animate-apple-fade-in relative">
               <div className="p-8 bg-green-500/10 dark:bg-green-500/20 rounded-[32px] border border-green-500/20 shadow-inner group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 pointer-events-none" />
-                <CheckCircle2 size={64} className="text-green-600 dark:text-green-400 relative z-10 animate-subtle-float" />
+                <CheckCircle2 size={64} className="text-green-600 dark:text-green-400 relative z-10" />
               </div>
               
               <div className="space-y-3 px-4">
