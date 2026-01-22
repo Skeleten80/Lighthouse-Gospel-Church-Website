@@ -1,20 +1,11 @@
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { Headset, Users, BookOpen, Music, Headphones, Radio } from 'lucide-react';
 
 export const Services: React.FC = () => {
   const address = "4817 Line 80, Listowel ON N4W 3G9, Canada";
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-
-  const visualizerBars = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
-      key: i,
-      height: `${20 + Math.random() * 60}%`,
-      animationDuration: `${0.8 + Math.random() * 1.2}s`,
-      animationDelay: `${i * 0.05}s`
-    }));
-  }, []);
 
   return (
     <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto space-y-24">
@@ -118,14 +109,14 @@ export const Services: React.FC = () => {
 
             {/* Subtle Animated Visualizer Bars */}
             <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-1 h-32 opacity-20 pointer-events-none">
-              {visualizerBars.map((bar) => (
+              {[...Array(20)].map((_, i) => (
                 <div 
-                  key={bar.key}
+                  key={i} 
                   className="w-2 bg-blue-500 dark:bg-blue-400 rounded-t-full animate-bounce" 
                   style={{ 
-                    height: bar.height,
-                    animationDuration: bar.animationDuration,
-                    animationDelay: bar.animationDelay
+                    height: `${20 + Math.random() * 60}%`,
+                    animationDuration: `${0.8 + Math.random() * 1.2}s`,
+                    animationDelay: `${i * 0.05}s`
                   }} 
                 />
               ))}

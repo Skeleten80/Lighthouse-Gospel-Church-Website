@@ -65,21 +65,25 @@ export const Navbar: React.FC = () => {
           rounded-[24px] transition-all duration-500 ease-apple
           ${scrolled ? 'scale-[0.98]' : 'scale-100'}
         `}>
-          {/* Church Logo Section */}
+          {/* Church Logo Section - Glow only on Hover/Touch */}
           <Link to="/" className="flex items-center gap-3 group pl-2 transition-all duration-500">
             <div className="relative">
-              <div className="absolute inset-0 bg-blue-500/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-apple scale-150 animate-pulse" />
-              <div className="relative p-2.5 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:shadow-blue-500/50">
-                <Church className="text-white w-5 h-5 filter drop-shadow-[0_0_5px_rgba(255,255,255,0.6)]" />
+              {/* This inner glow only appears on hover/active */}
+              <div className="absolute inset-0 bg-blue-500/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-2.5 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-lg transition-all duration-500 
+                group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(37,99,235,0.5)] 
+                group-active:scale-95 group-active:shadow-[0_0_35px_rgba(37,99,235,0.7)]">
+                <Church className="text-white w-5 h-5" />
               </div>
             </div>
             <div className="flex flex-col -space-y-1">
               <span className="text-black dark:text-white font-black text-lg tracking-tight transition-colors duration-500 group-hover:text-blue-600 dark:group-hover:text-blue-400">LIGHTHOUSE</span>
-              <span className="text-[9px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100 transition-opacity">GOSPEL CHURCH</span>
+              <span className="text-[9px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100">GOSPEL CHURCH</span>
             </div>
           </Link>
 
-          {/* Desktop Nav - Clean transition logic to prevent glow flicker */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-2xl border border-black/5 dark:border-white/5">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
@@ -92,12 +96,10 @@ export const Navbar: React.FC = () => {
                       ? 'text-black dark:text-white' 
                       : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:scale-105'}`}
                 >
-                  {/* High-priority Active Backdrop */}
                   {isActive && (
                     <div className="absolute inset-0 bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.05)] dark:shadow-none rounded-lg z-0 transition-all duration-300" />
                   )}
                   
-                  {/* Hover Glow Effect: Conditional rendering removes flicker when tab becomes active */}
                   {!isActive && (
                     <div className="absolute inset-0 opacity-0 group-hover/tab:opacity-100 transition-opacity duration-300 z-0 pointer-events-none">
                       <div className="absolute inset-0 bg-blue-500/10 dark:bg-blue-400/20 rounded-lg blur-[8px] scale-110" />
