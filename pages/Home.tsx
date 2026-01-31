@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { getDailyInspiration } from '../services/gemini';
-import { ArrowRight, Calendar, Heart, Headphones } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const { ArrowRight, Calendar, Heart, Headphones } = LucideIcons;
 
 export const Home: React.FC = () => {
   const [inspiration, setInspiration] = useState<{verse: string, reference: string, reflection: string} | null>(null);
@@ -39,7 +41,6 @@ export const Home: React.FC = () => {
       {/* AI Inspiration Card */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2 relative group">
-          {/* Enhanced side accent - slightly wider and more luminous */}
           <div className="absolute left-0 top-8 bottom-8 w-2 bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-600 rounded-full z-20 shadow-[0_0_20px_rgba(59,130,246,0.6)]" />
           
           <GlassCard className="h-full min-h-[320px] flex flex-col justify-center pl-12 
@@ -47,7 +48,6 @@ export const Home: React.FC = () => {
             shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)]
             ring-1 ring-white/30 dark:ring-white/10">
             
-            {/* Additional internal shine for the featured card */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/10 to-transparent pointer-events-none skew-x-12 translate-x-1/2" />
 
             <div className="space-y-6 relative z-10">
@@ -100,7 +100,6 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Service Times */}
       <section className="text-center space-y-12">
         <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight">Join Us This Sunday</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

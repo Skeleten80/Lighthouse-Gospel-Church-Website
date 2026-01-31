@@ -5,9 +5,11 @@ export interface Sermon {
   speaker: string;
   date: string;
   series: string;
-  videoUrl?: string;
+  youtubeId: string;
   audioUrl?: string;
-  thumbnail: string;
+  thumbnail?: string;
+  duration?: string;
+  featured?: boolean;
 }
 
 export interface ChurchEvent {

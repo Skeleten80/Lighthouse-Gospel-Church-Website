@@ -1,6 +1,7 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
+// Fix: Standardize initialization using the mandated process.env.API_KEY pattern.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getDailyInspiration = async () => {
@@ -21,7 +22,14 @@ export const getDailyInspiration = async () => {
         }
       }
     });
-    return JSON.parse(response.text);
+    
+    // Fix: Access the .text property directly (not as a method).
+    const text = response.text;
+    return text ? JSON.parse(text) : {
+      verse: "For I know the plans I have for you, declares the Lord.",
+      reference: "Jeremiah 29:11",
+      reflection: "God has a unique purpose for your journey. Trust in His timing and grace today."
+    };
   } catch (error) {
     console.error("Failed to fetch daily inspiration:", error);
     return {
@@ -51,8 +59,13 @@ export const getSermonSummary = async (title: string, speaker: string) => {
         }
       }
     });
-    return JSON.parse(response.text).points;
+    
+    // Fix: Access the .text property directly.
+    const text = response.text;
+    const data = text ? JSON.parse(text) : null;
+    return data?.points || ["Connecting with God's word", "Applying faith to daily life", "Growing in community"];
   } catch (error) {
+    console.error("Failed to fetch sermon summary:", error);
     return ["Connecting with God's word", "Applying faith to daily life", "Growing in community"];
   }
 };

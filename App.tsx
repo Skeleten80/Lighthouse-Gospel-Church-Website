@@ -9,6 +9,9 @@ import { Events } from './pages/Events';
 import { Sermons } from './pages/Sermons';
 import { Giving } from './pages/Giving';
 import { Connect } from './pages/Connect';
+import * as LucideIcons from 'lucide-react';
+
+const { MessageCircle } = LucideIcons;
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -44,9 +47,6 @@ const App: React.FC = () => {
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="space-y-4">
               <h4 className="text-2xl font-bold tracking-tighter text-black/90 dark:text-white/90">Lighthouse Gospel</h4>
-              <p className="text-black/70 dark:text-white/70 text-sm leading-relaxed">
-                A community defined by grace, driven by mission, and connecting for the future.
-              </p>
             </div>
             <div>
               <h5 className="font-bold mb-4 text-black dark:text-white">Quick Links</h5>
@@ -55,6 +55,16 @@ const App: React.FC = () => {
                 <li><a href="#/services" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Worship Times</a></li>
                 <li><a href="#/events" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Calendar</a></li>
                 <li><a href="#/sermons" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Resources</a></li>
+                <li>
+                  <a 
+                    href="https://wa.me/15195550123" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="hover:text-green-500 dark:hover:text-green-400 transition-colors flex items-center gap-1.5"
+                  >
+                    <MessageCircle size={14} /> Join WhatsApp
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
