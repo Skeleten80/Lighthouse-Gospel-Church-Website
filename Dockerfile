@@ -18,11 +18,14 @@ RUN npm run build
 # Stage 2: Serve the application with Nginx
 FROM nginx:stable-alpine
 
-# Copy the build output from the build stage to the Nginx HTML directory
-COPY --from=build /app/dist/ /usr/share/nginx/html/
+# Copy the build output from the build stage to the default Nginx public directory
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy the custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Remove the default Nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy our custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d
 
 # Expose port 80
 EXPOSE 80
