@@ -1,10 +1,6 @@
 
 import React from 'react';
 import { GlassCard } from '../components/GlassCard';
-import * as LucideIcons from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const { ArrowRight } = LucideIcons;
 
 export const Home: React.FC = () => {
   return (
@@ -21,21 +17,15 @@ export const Home: React.FC = () => {
         <p className="text-2xl md:text-4xl text-black/60 dark:text-white/60 font-medium tracking-tight transition-colors duration-500 px-4">
           Come worship with us.
         </p>
-        <div className="flex flex-wrap justify-center gap-4 px-4">
-          <Link to="/connect" className="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black px-8 py-4 rounded-2xl font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-xl">
-            Plan a Visit <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
       </section>
 
       {/* Service Times */}
       <section className="text-center space-y-12">
         <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight">Join Us This Sunday</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {[
-            { time: "09:00 AM", label: "First Service", location: "Main Sanctuary" },
-            { time: "11:00 AM", label: "Second Service", location: "Main Sanctuary" },
-            { time: "06:00 PM", label: "Youth & Young Adults", location: "Lower Studio" }
+            { time: "9:00 AM - 10:15 AM", label: "First Service", location: "Main Sanctuary" },
+            { time: "11:00 AM - 12:15 PM", label: "Second Service", location: "Main Sanctuary" }
           ].map((s, i) => (
             <GlassCard key={i} className="py-10">
               <h3 className="text-3xl font-bold text-black dark:text-white mb-2">{s.time}</h3>

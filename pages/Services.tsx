@@ -56,11 +56,11 @@ export const Services: React.FC = () => {
               <div className="flex flex-col gap-2 mb-6">
                 <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                   <span className="text-black/60 dark:text-white/60">First Service</span>
-                  <span className="text-black dark:text-white font-bold">9:00 AM</span>
+                  <span className="text-black dark:text-white font-bold">9:00 AM - 10:15 AM</span>
                 </div>
                 <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                   <span className="text-black/60 dark:text-white/60">Second Service</span>
-                  <span className="text-black dark:text-white font-bold">11:00 AM</span>
+                  <span className="text-black dark:text-white font-bold">11:00 AM - 12:15 PM</span>
                 </div>
               </div>
               <a 
