@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  church-website:
+    build: .
+    container_name: lighthouse_church_host
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=production
+    restart: always
