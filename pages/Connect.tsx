@@ -52,17 +52,17 @@ export const Connect: React.FC = () => {
             </GlassCard>
           </a>
 
-          <div className="group">
+          <a href="tel:5195215539" className="group">
             <GlassCard className="h-full p-8 flex flex-col items-center text-center gap-6 group-hover:bg-orange-500/5 dark:group-hover:bg-orange-500/10 transition-colors">
               <div className="p-5 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-orange-500 text-orange-600 dark:text-orange-400 group-hover:text-white shadow-sm">
                 <Phone size={32} />
               </div>
               <div className="space-y-2">
                 <h4 className="text-xl font-bold text-black dark:text-white">Call Us</h4>
-                <p className="text-black/50 dark:text-white/50">+1 (555) 0123-4567</p>
+                <p className="text-black/50 dark:text-white/50">519-521-5539</p>
               </div>
             </GlassCard>
-          </div>
+          </a>
         </div>
       </div>
     </div>
