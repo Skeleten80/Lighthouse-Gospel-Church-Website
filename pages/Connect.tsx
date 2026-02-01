@@ -19,20 +19,20 @@ export const Connect: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-3xl">
           <a 
             href={googleMapsUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="group"
           >
-            <GlassCard className="h-full p-8 flex flex-col items-center text-center gap-6 group-hover:bg-blue-500/5 dark:group-hover:bg-blue-500/10 transition-colors">
-              <div className="p-5 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-blue-500 text-blue-600 dark:text-blue-400 group-hover:text-white shadow-sm">
-                <MapPin size={32} />
+            <GlassCard className="h-full p-6 flex flex-col items-center text-center gap-4 group-hover:bg-blue-500/5 dark:group-hover:bg-blue-500/10 transition-colors">
+              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-blue-500 text-blue-600 dark:text-blue-400 group-hover:text-white shadow-sm">
+                <MapPin size={28} />
               </div>
-              <div className="space-y-2">
-                <h4 className="text-xl font-bold text-black dark:text-white">Visit Us</h4>
-                <p className="text-black/50 dark:text-white/50 leading-relaxed">{address}</p>
+              <div className="space-y-1">
+                <h4 className="text-lg font-bold text-black dark:text-white">Visit Us</h4>
+                <p className="text-sm text-black/50 dark:text-white/50 leading-relaxed max-w-[200px] mx-auto">{address}</p>
               </div>
             </GlassCard>
           </a>
@@ -41,25 +41,25 @@ export const Connect: React.FC = () => {
             href={`mailto:${email}`}
             className="group"
           >
-            <GlassCard className="h-full p-8 flex flex-col items-center text-center gap-6 group-hover:bg-purple-500/5 dark:group-hover:bg-purple-500/10 transition-colors">
-              <div className="p-5 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-purple-500 text-purple-600 dark:text-purple-400 group-hover:text-white shadow-sm">
-                <Mail size={32} />
+            <GlassCard className="h-full p-6 flex flex-col items-center text-center gap-4 group-hover:bg-purple-500/5 dark:group-hover:bg-purple-500/10 transition-colors">
+              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-purple-500 text-purple-600 dark:text-purple-400 group-hover:text-white shadow-sm">
+                <Mail size={28} />
               </div>
-              <div className="space-y-2">
-                <h4 className="text-xl font-bold text-black dark:text-white">Email Us</h4>
-                <p className="text-black/50 dark:text-white/50">{email}</p>
+              <div className="space-y-1">
+                <h4 className="text-lg font-bold text-black dark:text-white">Email Us</h4>
+                <p className="text-sm text-black/50 dark:text-white/50">{email}</p>
               </div>
             </GlassCard>
           </a>
 
           <a href="tel:5195215539" className="group">
-            <GlassCard className="h-full p-8 flex flex-col items-center text-center gap-6 group-hover:bg-orange-500/5 dark:group-hover:bg-orange-500/10 transition-colors">
-              <div className="p-5 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-orange-500 text-orange-600 dark:text-orange-400 group-hover:text-white shadow-sm">
-                <Phone size={32} />
+            <GlassCard className="h-full p-6 flex flex-col items-center text-center gap-4 group-hover:bg-orange-500/5 dark:group-hover:bg-orange-500/10 transition-colors">
+              <div className="p-4 bg-white/40 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 transition-all duration-300 group-hover:bg-orange-500 text-orange-600 dark:text-orange-400 group-hover:text-white shadow-sm">
+                <Phone size={28} />
               </div>
-              <div className="space-y-2">
-                <h4 className="text-xl font-bold text-black dark:text-white">Call Us</h4>
-                <p className="text-black/50 dark:text-white/50">519-521-5539</p>
+              <div className="space-y-1">
+                <h4 className="text-lg font-bold text-black dark:text-white">Call Us</h4>
+                <p className="text-sm text-black/50 dark:text-white/50">519-521-5539</p>
               </div>
             </GlassCard>
           </a>
