@@ -77,7 +77,7 @@ export const About: React.FC = () => {
       <section className="text-center space-y-6 max-w-3xl mx-auto">
         <h1 className="text-6xl font-bold text-black dark:text-white tracking-tight">Our Story</h1>
         <p className="text-xl text-black/60 dark:text-white/60">
-          Rooted in Listowel, Lighthouse Gospel Church is a community dedicated to sharing the grace of Christ in the modern age.
+          Rooted in Listowel, Lighthouse Gospel Church is a community dedicated to sharing the grace of Christ.
         </p>
       </section>
 
@@ -157,17 +157,19 @@ export const About: React.FC = () => {
               </div>
               <h2 className="text-3xl font-bold text-black dark:text-white tracking-tight">Core Values</h2>
             </div>
-            <ul className="space-y-8">
+            <ul className="space-y-10">
               {[
-                { icon: <Cross className="text-blue-600" size={18} />, title: "Christ-Centeredness", text: "Jesus at the heart of everything." },
-                { icon: <Users className="text-purple-600" size={18} />, title: "Authentic Community", text: "Radical hospitality for all." },
-                { icon: <Zap className="text-orange-600" size={18} />, title: "Spiritual Growth", text: "Living out faith boldly." }
+                { icon: <Cross className="text-blue-600" size={24} />, title: "Christ-Centeredness", text: "Jesus at the heart of everything." },
+                { icon: <Users className="text-purple-600" size={24} />, title: "Authentic Community", text: "Radical hospitality for all." },
+                { icon: <Zap className="text-orange-600" size={24} />, title: "Spiritual Growth", text: "Living out faith boldly." }
               ].map((v, i) => (
-                <li key={i} className="flex gap-4 group">
-                  <div className="shrink-0 mt-1">{v.icon}</div>
+                <li key={i} className="flex flex-col items-center text-center gap-3 group">
+                  <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 group-hover:scale-110 transition-transform duration-300">
+                    {v.icon}
+                  </div>
                   <div>
-                    <p className="text-black dark:text-white font-bold">{v.title}</p>
-                    <p className="text-black/60 dark:text-white/60 text-sm">{v.text}</p>
+                    <p className="text-black dark:text-white font-bold text-lg">{v.title}</p>
+                    <p className="text-black/60 dark:text-white/60 text-sm leading-relaxed">{v.text}</p>
                   </div>
                 </li>
               ))}

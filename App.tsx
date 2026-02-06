@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Connect } from './pages/Connect';
+import { PrivacyPolicy, TermsOfService } from './pages/Legal';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -29,6 +30,8 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/connect" element={<Connect />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
         </main>
 
@@ -38,8 +41,8 @@ const App: React.FC = () => {
             
             <p className="text-black/60 dark:text-white/60 text-[10px] uppercase tracking-[0.2em] font-black inline-flex flex-wrap justify-center gap-x-8 gap-y-2">
               <span>© {currentYear} Lighthouse Gospel Church. All Rights Reserved.</span>
-              <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</a>
+              <Link to="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
             </p>
           </div>
         </footer>
