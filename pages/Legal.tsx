@@ -10,7 +10,7 @@ const LegalLayout: React.FC<{
   children: React.ReactNode 
 }> = ({ title, updated, icon, children }) => (
   <div className="pt-32 pb-20 px-6 max-w-4xl mx-auto space-y-12">
-    <div className="text-center space-y-6 animate-apple-slide-up">
+    <div className="text-center space-y-8 animate-apple-slide-up">
       <div className="w-20 h-20 bg-blue-500/10 dark:bg-blue-500/20 rounded-3xl flex items-center justify-center mx-auto border border-blue-500/20 backdrop-blur-xl">
         {icon}
       </div>
@@ -18,16 +18,16 @@ const LegalLayout: React.FC<{
       <p className="text-sm font-bold uppercase tracking-widest text-black/40 dark:text-white/40">Last Updated: {updated}</p>
     </div>
 
-    <GlassCard className="p-8 md:p-12 space-y-10 animate-apple-fade-in">
+    <GlassCard className="p-8 md:p-14 space-y-12 animate-apple-fade-in">
       {children}
     </GlassCard>
   </div>
 );
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-  <section className="space-y-4">
+  <section className="space-y-6">
     <h2 className="text-2xl font-bold text-black dark:text-white tracking-tight">{title}</h2>
-    <div className="text-black/70 dark:text-white/70 leading-relaxed space-y-4 text-lg">
+    <div className="text-black/70 dark:text-white/70 leading-loose space-y-6 text-lg">
       {children}
     </div>
   </section>
@@ -48,7 +48,7 @@ export const PrivacyPolicy: React.FC = () => {
 
       <Section title="2. Information We Collect">
         <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
-        <ul className="list-disc pl-5 space-y-2 marker:text-blue-500">
+        <ul className="list-disc pl-5 space-y-4 marker:text-blue-500">
           <li><strong>Identity Data:</strong> includes first name, last name, and username.</li>
           <li><strong>Contact Data:</strong> includes email address and telephone numbers.</li>
           <li><strong>Technical Data:</strong> includes internet protocol (IP) address, browser type and version, time zone setting and location.</li>
@@ -58,7 +58,7 @@ export const PrivacyPolicy: React.FC = () => {
 
       <Section title="3. How We Use Your Data">
         <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
-        <ul className="list-disc pl-5 space-y-2 marker:text-blue-500">
+        <ul className="list-disc pl-5 space-y-4 marker:text-blue-500">
           <li>To register you as a new member or guest.</li>
           <li>To manage our relationship with you including notifying you about changes to our terms or privacy policy.</li>
           <li>To administer and protect our organization and this website (including troubleshooting, data analysis, testing, system maintenance, support, reporting and hosting of data).</li>
@@ -75,7 +75,7 @@ export const PrivacyPolicy: React.FC = () => {
         <p>
           If you have any questions about this privacy policy or our privacy practices, please contact us at:
         </p>
-        <p className="font-medium text-black dark:text-white mt-2">
+        <p className="font-medium text-black dark:text-white mt-4 leading-loose">
           Lighthouse Gospel Church<br/>
           4817 Line 80, Listowel ON N4W 3G9<br/>
           Email: pedroneufeld47@gmail.com
@@ -102,7 +102,7 @@ export const TermsOfService: React.FC = () => {
         <p>
           Permission is granted to temporarily download one copy of the materials (information or software) on Lighthouse Gospel Church's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
         </p>
-        <ul className="list-disc pl-5 space-y-2 marker:text-blue-500">
+        <ul className="list-disc pl-5 space-y-4 marker:text-blue-500">
           <li>Modify or copy the materials;</li>
           <li>Use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
           <li>Attempt to decompile or reverse engineer any software contained on Lighthouse Gospel Church's website;</li>

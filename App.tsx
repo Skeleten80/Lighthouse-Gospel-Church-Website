@@ -39,11 +39,15 @@ const App: React.FC = () => {
           <div className="max-w-7xl mx-auto flex flex-col items-center justify-center text-center space-y-8">
             <h4 className="text-2xl font-bold tracking-tighter text-black/90 dark:text-white/90">Lighthouse Gospel</h4>
             
-            <p className="text-black/60 dark:text-white/60 text-[10px] uppercase tracking-[0.2em] font-black inline-flex flex-wrap justify-center gap-x-8 gap-y-2">
-              <span>© {currentYear} Lighthouse Gospel Church. All Rights Reserved.</span>
-              <Link to="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <span className="text-black/60 dark:text-white/60 text-[10px] uppercase tracking-[0.2em] font-black">
+                © {currentYear} Lighthouse Gospel Church. All Rights Reserved.
+              </span>
+              <div className="flex gap-8">
+                <Link to="/privacy" className="text-black/60 dark:text-white/60 text-[10px] uppercase tracking-[0.2em] font-black hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
+                <Link to="/terms" className="text-black/60 dark:text-white/60 text-[10px] uppercase tracking-[0.2em] font-black hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
