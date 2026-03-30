@@ -4,7 +4,7 @@ import { GlassCard } from '../components/GlassCard';
 
 export const Home: React.FC = () => {
   return (
-    <div className="pt-32 pb-20 px-6 space-y-24 max-w-7xl mx-auto overflow-x-hidden">
+    <div className="pt-32 pb-20 px-6 space-y-24 max-w-7xl mx-auto">
       {/* Hero Section */}
       <section className="relative flex flex-col items-center text-center space-y-8 py-20">
         <div className="absolute -top-40 -z-10 w-full max-w-[500px] aspect-square bg-blue-600/20 dark:bg-blue-600/30 blur-[120px] rounded-full left-1/2 -translate-x-1/2" />

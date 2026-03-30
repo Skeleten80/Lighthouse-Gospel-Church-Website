@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route, useLocation, Link } from 'react-ro
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
+import { Events } from './pages/Events';
 import { Connect } from './pages/Connect';
 import { PrivacyPolicy, TermsOfService } from './pages/Legal';
 
@@ -29,6 +30,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/events" element={<Events />} />
             <Route path="/connect" element={<Connect />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
