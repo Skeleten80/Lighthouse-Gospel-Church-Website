@@ -1,385 +1,282 @@
+import React, { useState } from 'react';
+import {
+  Play, Search, BookOpen, Calendar, Clock,
+  Download, Headphones, Rss,
+} from 'lucide-react';
 
-import React, { useState, useRef, useEffect } from 'react';
-import { GlassCard } from '../components/GlassCard';
-import { Sermon } from '../types';
-import * as LucideIcons from 'lucide-react';
+/* ── Data ─────────────────────────────────────────────────────────────────── */
+interface Sermon {
+  id: string;
+  title: string;
+  series: string;
+  speaker: string;
+  date: string;
+  duration: string;
+  passage: string;
+  tag: string;
+  featured?: boolean;
+}
 
-const { 
-  Play, 
-  Pause, 
-  Search, 
-  Headset, 
-  Mic2, 
-  BookOpen, 
-  SkipBack, 
-  SkipForward, 
-  Volume2, 
-  X,
-  Youtube,
-  Tv,
-  Radio,
-  Video
-} = LucideIcons;
-
-const sermonData: Sermon[] = [
-  { 
-    id: '1', 
-    title: 'The Digital Sabbath', 
-    speaker: 'Pastor Pedro Neufeld', 
-    date: 'Oct 6, 2024', 
-    series: 'Ancient Rhythms', 
-    duration: '42:15',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    youtubeId: 'dQw4w9WgXcQ',
-    featured: true
-  },
-  { 
-    id: '2', 
-    title: 'Grace in the Modern Age', 
-    speaker: 'Marcus Thorne', 
-    date: 'Sep 29, 2024', 
-    series: 'Faith & Tech', 
-    duration: '38:40',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    youtubeId: '9bZkp7q19f0'
-  },
-  { 
-    id: '3', 
-    title: 'Community Beyond Borders', 
-    speaker: 'Pastor Pedro Neufeld', 
-    date: 'Sep 22, 2024', 
-    series: 'Ancient Rhythms', 
-    duration: '45:02',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    youtubeId: 'dQw4w9WgXcQ'
-  },
-  { 
-    id: '4', 
-    title: 'The Heart of Worship', 
-    speaker: 'Elena Rodriguez', 
-    date: 'Sep 15, 2024', 
-    series: 'Heart Matters', 
-    duration: '35:20',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-    youtubeId: '9bZkp7q19f0'
-  },
+const sermons: Sermon[] = [
+  { id:'1', title:'When the Waves Rise',                         series:'Anchor Points',                        speaker:'Pastor Pedro Neufeld', date:'Oct 27, 2024', duration:'42 min', passage:'Matthew 14:22–33',    tag:'Faith',     featured:true },
+  { id:'2', title:'The Peace That Guards',                       series:'Anchor Points',                        speaker:'Pastor Pedro Neufeld', date:'Oct 20, 2024', duration:'38 min', passage:'Philippians 4:4–9',   tag:'Hope'     },
+  { id:'3', title:'Holding On When You Feel Like Letting Go',    series:'Anchor Points',                        speaker:'Pastor Pedro Neufeld', date:'Oct 13, 2024', duration:'44 min', passage:'Hebrews 12:1–3',      tag:'Courage'  },
+  { id:'4', title:'Rooted and Grounded',                         series:'Anchor Points',                        speaker:'Pastor Pedro Neufeld', date:'Oct 6, 2024',  duration:'41 min', passage:'Ephesians 3:14–21',   tag:'Faith'    },
+  { id:'5', title:'The Weight You Were Never Meant to Carry',    series:'Anchor Points',                        speaker:'Pastor Pedro Neufeld', date:'Sep 29, 2024', duration:'39 min', passage:'1 Peter 5:6–7',       tag:'Healing'  },
+  { id:'6', title:'What Real Community Looks Like',              series:'Together: A Series on the Church',     speaker:'Pastor Pedro Neufeld', date:'Sep 15, 2024', duration:'43 min', passage:'Acts 2:42–47',        tag:'Community'},
+  { id:'7', title:'Why We Gather',                               series:'Together: A Series on the Church',     speaker:'Pastor Pedro Neufeld', date:'Sep 8, 2024',  duration:'40 min', passage:'Hebrews 10:24–25',    tag:'Community'},
+  { id:'8', title:'The Practice of Prayer',                      series:'Spiritual Disciplines',                speaker:'Pastor Pedro Neufeld', date:'Aug 25, 2024', duration:'46 min', passage:'Luke 11:1–13',        tag:'Prayer'   },
+  { id:'9', title:'Fasting: Hunger That Leads to Fullness',      series:'Spiritual Disciplines',                speaker:'Pastor Pedro Neufeld', date:'Aug 18, 2024', duration:'37 min', passage:'Matthew 6:16–18',     tag:'Prayer'   },
+  { id:'10',title:'Generous Life',                               series:'Stewardship &amp; Generosity',         speaker:'Pastor Pedro Neufeld', date:'Aug 11, 2024', duration:'40 min', passage:'2 Corinthians 9:6–8', tag:'Faith'    },
+  { id:'11',title:'What the Spirit Is Saying',                   series:'Listening to God',                     speaker:'Pastor Pedro Neufeld', date:'Aug 4, 2024',  duration:'45 min', passage:'Revelation 2:7',      tag:'Courage'  },
+  { id:'12',title:'Grace Is Not Permission to Drift',            series:'Listening to God',                     speaker:'Pastor Pedro Neufeld', date:'Jul 28, 2024', duration:'42 min', passage:'Romans 6:1–14',       tag:'Hope'     },
 ];
 
-const AudioVisualizer: React.FC<{ isPlaying: boolean; color?: string }> = ({ isPlaying, color = '#3b82f6' }) => {
-  return (
-    <div className="flex items-end gap-1 h-4">
-      {[...Array(5)].map((_, i) => (
-        <div 
-          key={i} 
-          className={`w-1 rounded-full transition-all duration-500 ${isPlaying ? 'animate-bounce' : 'h-1 opacity-40'}`}
-          style={{ 
-            backgroundColor: color,
-            height: isPlaying ? `${40 + Math.random() * 60}%` : '4px',
-            animationDelay: `${i * 0.1}s`,
-            animationDuration: '0.6s'
-          }}
-        />
-      ))}
-    </div>
-  );
+const allSeries = ['All Series', ...Array.from(new Set(sermons.map(s => s.series)))];
+const allTags   = ['All Topics', ...Array.from(new Set(sermons.map(s => s.tag)))];
+
+const tagColor: Record<string, string> = {
+  Faith:     'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+  Hope:      'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
+  Community: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  Healing:   'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300',
+  Prayer:    'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  Courage:   'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
 };
 
-export const Sermons: React.FC = () => {
-  const [activeSermon, setActiveSermon] = useState<Sermon | null>(null);
-  const [activeVideo, setActiveVideo] = useState<Sermon | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [filter, setFilter] = useState('All');
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const seriesOptions = ['All', ...new Set(sermonData.map(s => s.series))];
-  const filteredSermons = sermonData.filter(s => filter === 'All' || s.series === filter);
-  const featuredSermon = sermonData.find(s => s.featured) || sermonData[0];
-
-  const formatTime = (time: number) => {
-    if (isNaN(time) || !isFinite(time)) return "0:00";
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      if (isPlaying && activeSermon) {
-        audio.play().catch(() => setIsPlaying(false));
-      } else {
-        audio.pause();
-      }
-    }
-  }, [isPlaying, activeSermon]);
-
-  const onTimeUpdate = () => {
-    if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
-  };
-
-  const onLoadedMetadata = () => {
-    if (audioRef.current) setDuration(audioRef.current.duration);
-  };
-
-  const handleSermonToggle = (sermon: Sermon) => {
-    if (activeSermon?.id === sermon.id) {
-      setIsPlaying(!isPlaying);
-    } else {
-      setActiveSermon(sermon);
-      setIsPlaying(true);
-      setCurrentTime(0);
-    }
-  };
-
-  return (
-    <div className="pt-32 pb-40 px-6 max-w-7xl mx-auto space-y-20">
-      <audio 
-        ref={audioRef}
-        src={activeSermon?.audioUrl}
-        onTimeUpdate={onTimeUpdate}
-        onLoadedMetadata={onLoadedMetadata}
-        onEnded={() => setIsPlaying(false)}
-      />
-
-      {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 rounded-full text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
-            <Radio size={12} className="animate-pulse" /> Live Now: Sunday Worship
-          </div>
-          <h1 className="text-6xl font-bold text-black dark:text-white tracking-tighter">Sermon Library</h1>
-          <p className="text-black/50 dark:text-white/50 max-w-lg text-lg">
-            Immerse yourself in our latest messages. Available in 4K Video and High-Fidelity Audio.
-          </p>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-          <div className="relative group flex-1 md:min-w-[300px]">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Search speakers or topics..." 
-              className="w-full bg-white/50 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl py-4 pl-12 pr-4 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all backdrop-blur-md"
-            />
-          </div>
-          <div className="flex items-center gap-2 bg-white/50 dark:bg-white/5 border border-black/10 dark:border-white/10 p-1.5 rounded-2xl backdrop-blur-md overflow-x-auto no-scrollbar">
-            {seriesOptions.map(opt => (
-              <button 
-                key={opt}
-                onClick={() => setFilter(opt)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${filter === opt ? 'bg-black dark:bg-white text-white dark:text-black shadow-lg' : 'text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white'}`}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
+/* ── Sermon Card ─────────────────────────────────────────────────────────── */
+const SermonCard: React.FC<{ s: Sermon }> = ({ s }) => (
+  <article className="card-base flex flex-col overflow-hidden group">
+    {/* Thumbnail */}
+    <div className="aspect-video bg-gradient-to-br from-navy-800 to-navy-900 relative overflow-hidden cursor-pointer">
+      <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none" aria-hidden="true">
+        <div className="beam" />
+      </div>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full bg-gold-400 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110">
+          <Play className="w-5 h-5 text-white ml-0.5" aria-hidden="true" />
         </div>
       </div>
+      {s.tag && (
+        <span className={`absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${tagColor[s.tag] ?? 'bg-gray-100 text-gray-700'}`}>
+          {s.tag}
+        </span>
+      )}
+    </div>
 
-      {/* Featured Section (Removed Thumbnail) */}
-      <section className="animate-apple-slide-up">
-        <div className="relative group rounded-[48px] overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-900 aspect-video max-h-[550px] shadow-[0_50px_120px_rgba(0,0,0,0.3)] dark:shadow-[0_50px_120px_rgba(0,0,0,0.7)] border border-white/20">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(59,130,246,0.5),transparent)]" />
-          <div className="absolute inset-0 flex items-center justify-center opacity-10">
-             <Video size={300} className="text-white" />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-12 flex flex-col justify-end">
-            <div className="space-y-6 max-w-2xl relative z-10">
-              <div className="flex items-center gap-3">
-                <div className="px-3 py-1 bg-red-600 text-white rounded-lg text-[10px] font-black uppercase tracking-widest shadow-lg">
-                  <Youtube size={12} className="inline mr-1" /> Latest Video
+    {/* Info */}
+    <div className="flex flex-col flex-1 p-5 gap-3">
+      <p className="text-xs text-gold-600 dark:text-gold-400 font-semibold">{s.series}</p>
+      <h3 className="font-heading font-semibold text-navy-DEFAULT dark:text-white leading-snug group-hover:text-gold-700 dark:group-hover:text-gold-400 transition-colors">
+        {s.title}
+      </h3>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-navy-500 dark:text-navy-300 mt-auto">
+        <span className="flex items-center gap-1"><BookOpen size={11} aria-hidden="true" />{s.passage}</span>
+        <span className="flex items-center gap-1"><Calendar size={11} aria-hidden="true" />{s.date}</span>
+        <span className="flex items-center gap-1"><Clock    size={11} aria-hidden="true" />{s.duration}</span>
+      </div>
+    </div>
+
+    {/* Actions */}
+    <div className="flex gap-2 px-5 pb-5 border-t border-navy-100 dark:border-navy-700/40 pt-4">
+      <button className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-navy-DEFAULT hover:bg-navy-800 dark:hover:bg-navy-700 rounded-lg py-2 transition-colors" aria-label={`Watch ${s.title}`}>
+        <Play size={12} aria-hidden="true" /> Watch
+      </button>
+      <button className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold text-navy-600 dark:text-navy-200 border border-navy-200 dark:border-navy-600 rounded-lg py-2 hover:bg-navy-50 dark:hover:bg-navy-700/40 transition-colors" aria-label={`Listen to ${s.title}`}>
+        <Headphones size={12} aria-hidden="true" /> Listen
+      </button>
+      <button className="w-9 flex items-center justify-center text-navy-500 dark:text-navy-300 border border-navy-200 dark:border-navy-600 rounded-lg hover:bg-navy-50 dark:hover:bg-navy-700/40 transition-colors" aria-label={`Download ${s.title}`}>
+        <Download size={12} aria-hidden="true" />
+      </button>
+    </div>
+  </article>
+);
+
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+export const Sermons: React.FC = () => {
+  const [search,       setSearch]       = useState('');
+  const [activeSeries, setActiveSeries] = useState('All Series');
+  const [activeTag,    setActiveTag]    = useState('All Topics');
+
+  const featured = sermons.find(s => s.featured)!;
+  const filtered  = sermons.filter(s => {
+    const q = search.toLowerCase();
+    return (
+      (s.title.toLowerCase().includes(q) || s.passage.toLowerCase().includes(q) || s.series.toLowerCase().includes(q)) &&
+      (activeSeries === 'All Series' || s.series === activeSeries) &&
+      (activeTag    === 'All Topics' || s.tag    === activeTag)
+    );
+  });
+
+  return (
+    <div>
+
+      {/* Header */}
+      <header className="relative py-28 px-6 overflow-hidden bg-gradient-to-br from-navy-900 via-navy-DEFAULT to-navy-800 text-white">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25" aria-hidden="true">
+          <div className="beam" />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <span className="section-label mb-5 inline-block bg-gold-500/20 border-gold-400/40 text-gold-300">
+            Sermons &amp; Media
+          </span>
+          <h1 className="font-heading font-bold text-5xl md:text-6xl mb-5 leading-tight">
+            Every Week, a Fresh Word
+          </h1>
+          <p className="text-white/70 text-lg mb-8">
+            Accessible wherever you are — watch online, listen on the go, or join us in person.
+          </p>
+          <button className="btn-secondary text-sm inline-flex items-center gap-2">
+            <Rss size={15} aria-hidden="true" /> Subscribe to Podcast
+          </button>
+        </div>
+      </header>
+
+      {/* Featured Sermon */}
+      <section className="py-20 px-6" aria-label="Featured sermon">
+        <div className="max-w-6xl mx-auto">
+          <span className="section-label mb-6 inline-block">Latest Message</span>
+          <div className="grid md:grid-cols-5 gap-8 items-start">
+
+            <div className="md:col-span-3 rounded-2xl overflow-hidden aspect-video bg-navy-900 relative group cursor-pointer shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-navy-700/60 to-navy-900/80" />
+              <div className="absolute inset-0 overflow-hidden opacity-40 pointer-events-none" aria-hidden="true">
+                <div className="beam" />
+              </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-8">
+                <div className="w-20 h-20 rounded-full bg-gold-400 flex items-center justify-center shadow-xl group-hover:scale-105 transition-transform duration-300">
+                  <Play className="w-9 h-9 text-white ml-1" aria-hidden="true" />
                 </div>
-                <div className="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-lg text-[10px] font-black uppercase tracking-widest">
-                  {featuredSermon.series}
+                <div>
+                  <p className="text-gold-300 text-xs uppercase tracking-widest font-semibold mb-2">{featured.series}</p>
+                  <p className="font-heading font-bold text-white text-2xl md:text-3xl leading-tight">{featured.title}</p>
+                  <p className="text-white/60 text-sm mt-2">{featured.passage}</p>
                 </div>
               </div>
-              <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none">{featuredSermon.title}</h2>
-              <p className="text-white/80 font-medium text-xl">{featuredSermon.speaker} • {featuredSermon.date}</p>
-              <div className="flex flex-wrap gap-4 pt-4">
-                <button 
-                  onClick={() => setActiveVideo(featuredSermon)}
-                  className="bg-white text-black px-10 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-white/90 transition-all active:scale-95 shadow-2xl"
-                >
-                  <Play className="fill-current" size={24} /> Watch Message
-                </button>
-                <button 
-                   onClick={() => handleSermonToggle(featuredSermon)}
-                   className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-10 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-white/20 transition-all active:scale-95"
-                >
-                  <Mic2 size={24} /> Listen to Audio
-                </button>
+            </div>
+
+            <div className="md:col-span-2 space-y-5">
+              <div className="card-base p-6">
+                <p className="text-xs text-gold-600 dark:text-gold-400 font-semibold mb-1 uppercase tracking-wider">Current Series</p>
+                <h2 className="font-heading font-bold text-navy-DEFAULT dark:text-white text-xl mb-4">{featured.series}</h2>
+                <div className="space-y-2 text-sm text-navy-600 dark:text-navy-200 mb-5">
+                  <p className="flex items-center gap-2"><BookOpen size={14} aria-hidden="true" />{featured.passage}</p>
+                  <p className="text-navy-500 dark:text-navy-300 pl-5">{featured.speaker}</p>
+                  <p className="flex items-center gap-2"><Calendar size={14} aria-hidden="true" />{featured.date}</p>
+                  <p className="flex items-center gap-2"><Clock    size={14} aria-hidden="true" />{featured.duration}</p>
+                </div>
+                <div className="flex gap-2">
+                  <button className="flex-1 btn-navy text-sm py-2.5 flex items-center justify-center gap-1.5">
+                    <Play size={14} aria-hidden="true" /> Watch Now
+                  </button>
+                  <button className="flex-1 btn-outline text-sm py-2.5 flex items-center justify-center gap-1.5">
+                    <Headphones size={14} aria-hidden="true" /> Listen
+                  </button>
+                </div>
+              </div>
+
+              <div className="card-base p-5">
+                <p className="text-xs text-navy-500 dark:text-navy-300 uppercase tracking-widest mb-3 font-semibold">Previous in Series</p>
+                <ul className="space-y-3">
+                  {sermons.slice(1, 4).map(s => (
+                    <li key={s.id} className="flex items-center gap-3 cursor-pointer group/item">
+                      <div className="w-8 h-8 rounded-lg bg-navy-50 dark:bg-navy-700/60 flex items-center justify-center shrink-0 group-hover/item:bg-gold-100 dark:group-hover/item:bg-gold-900/30 transition-colors">
+                        <Play size={12} className="text-navy-500 dark:text-navy-300 group-hover/item:text-gold-600 dark:group-hover/item:text-gold-400 ml-0.5" aria-hidden="true" />
+                      </div>
+                      <span className="text-sm text-navy-700 dark:text-navy-200 group-hover/item:text-gold-700 dark:group-hover/item:text-gold-400 transition-colors leading-tight">{s.title}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Sermon Grid (Removed Thumbnails) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {filteredSermons.filter(s => !s.featured).map(sermon => (
-          <GlassCard 
-            key={sermon.id} 
-            className={`group transition-all duration-500 hover:ring-1 hover:ring-blue-500/30 ${activeSermon?.id === sermon.id ? 'ring-2 ring-blue-500/50 scale-[1.02]' : ''}`}
-          >
-            <div className="flex flex-col sm:flex-row gap-8">
-              <div className={`relative w-full sm:w-56 aspect-video sm:aspect-square rounded-3xl overflow-hidden shrink-0 shadow-2xl bg-gradient-to-tr from-black/5 to-black/20 dark:from-white/5 dark:to-white/10 border border-black/5 dark:border-white/5 flex items-center justify-center group/img`}>
-                <Mic2 className="text-black/10 dark:text-white/10 w-24 h-24 group-hover/img:scale-110 transition-transform duration-700 ease-apple" />
-                
-                {activeSermon?.id === sermon.id && isPlaying && (
-                  <div className="absolute inset-0 bg-blue-500/20 backdrop-blur-sm flex items-center justify-center">
-                    <AudioVisualizer isPlaying={true} color="#ffffff" />
-                  </div>
-                )}
+      {/* Archive */}
+      <section className="py-20 px-6 bg-cream-200/50 dark:bg-navy-800/30" aria-label="Sermon archive">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-heading font-bold text-navy-DEFAULT dark:text-white text-3xl mb-8">Sermon Archive</h2>
 
-                <button 
-                  onClick={() => handleSermonToggle(sermon)}
-                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity"
+          {/* Search */}
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400" aria-hidden="true" />
+              <input
+                type="search"
+                placeholder="Search sermons, passages, series…"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-navy-200 dark:border-navy-600 bg-white dark:bg-navy-800 text-navy-DEFAULT dark:text-white placeholder-navy-400 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400"
+                aria-label="Search sermons"
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {allSeries.map(s => (
+                <button
+                  key={s}
+                  onClick={() => setActiveSeries(s)}
+                  className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                    activeSeries === s
+                      ? 'bg-navy-DEFAULT text-white'
+                      : 'bg-white dark:bg-navy-800 border border-navy-200 dark:border-navy-600 text-navy-600 dark:text-navy-200 hover:border-navy-400'
+                  }`}
                 >
-                  <div className="w-16 h-16 bg-white/90 dark:bg-black/90 backdrop-blur-xl rounded-full shadow-2xl flex items-center justify-center text-black dark:text-white scale-90 group-hover/img:scale-100 transition-transform">
-                    {activeSermon?.id === sermon.id && isPlaying ? (
-                      <Pause className="fill-current" size={28} />
-                    ) : (
-                      <Play className="fill-current ml-1" size={28} />
-                    )}
-                  </div>
+                  {s}
                 </button>
-              </div>
-
-              <div className="flex-1 flex flex-col justify-center space-y-5">
-                <div className="space-y-2">
-                  <div className="flex justify-between items-start">
-                    <span className="text-[10px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-widest">{sermon.series}</span>
-                    <span className="text-[10px] text-black/30 dark:text-white/30 font-bold uppercase tracking-widest">{sermon.duration}</span>
-                  </div>
-                  <h3 className="text-3xl font-bold text-black dark:text-white tracking-tight leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {sermon.title}
-                  </h3>
-                  <p className="text-black/50 dark:text-white/50 font-medium text-base">{sermon.speaker} • {sermon.date}</p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <button 
-                    onClick={() => setActiveVideo(sermon)}
-                    className="flex items-center gap-2 px-6 py-3 bg-red-600/10 dark:bg-red-500/10 rounded-2xl text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-600/20 dark:hover:bg-red-500/20 transition-all border border-red-500/20"
-                  >
-                    <Youtube size={16} /> Watch Video
-                  </button>
-                  <button 
-                    onClick={() => handleSermonToggle(sermon)}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold transition-all border ${activeSermon?.id === sermon.id && isPlaying ? 'bg-blue-600 text-white border-blue-500' : 'bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/10 border-black/5 dark:border-white/5'}`}>
-                    {activeSermon?.id === sermon.id && isPlaying ? <Pause size={16} /> : <Play size={16} />} Audio
-                  </button>
-                  <button className="flex items-center gap-2 px-6 py-3 bg-black/5 dark:bg-white/5 rounded-2xl text-xs font-bold text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/10 transition-all border border-black/5 dark:border-white/5">
-                    <BookOpen size={16} /> Notes
-                  </button>
-                </div>
-              </div>
-            </div>
-          </GlassCard>
-        ))}
-      </div>
-
-      {/* Video Modal Player */}
-      {activeVideo && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 animate-apple-fade-in">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-[60px]" onClick={() => setActiveVideo(null)} />
-          
-          <div className="relative w-full max-w-6xl aspect-video rounded-[40px] overflow-hidden bg-black shadow-[0_60px_150px_rgba(0,0,0,0.8)] border border-white/20 group/video-container animate-apple-slide-up">
-            <div className="absolute top-0 left-0 right-0 p-8 z-20 flex justify-between items-start opacity-0 group-hover/video-container:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-black/90 to-transparent">
-               <div className="space-y-2">
-                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-600 rounded-lg text-white text-[10px] font-black uppercase tracking-widest shadow-lg">
-                   <Youtube size={12} /> Live Broadcast Feed
-                 </div>
-                 <h4 className="text-white font-bold text-3xl tracking-tight leading-none">{activeVideo.title}</h4>
-                 <p className="text-white/60 text-base font-medium tracking-wide uppercase">{activeVideo.speaker} • {activeVideo.series}</p>
-               </div>
-               <button 
-                onClick={() => setActiveVideo(null)}
-                className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20 active:scale-90"
-               >
-                 <X size={32} />
-               </button>
-            </div>
-            
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1&hd=1&vq=hd1080`}
-              title={activeVideo.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="relative z-10 w-full h-full"
-            ></iframe>
-          </div>
-        </div>
-      )}
-
-      {/* Bottom Audio Player (Removed Thumbnail) */}
-      {activeSermon && !activeVideo && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl z-50 transition-all duration-700 animate-apple-slide-up">
-          <div className="relative group/player">
-            <div className="absolute inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-[50px] saturate-[200%] rounded-[36px] border border-white/40 dark:border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.2)] dark:shadow-[0_40px_100px_rgba(0,0,0,0.6)]" />
-            <div className="relative p-5 md:p-6 flex flex-col md:flex-row items-center gap-6 md:gap-10">
-              <div className="flex items-center gap-5 w-full md:w-auto min-w-0">
-                <div className="w-16 h-16 rounded-[22px] bg-gradient-to-br from-blue-600 to-indigo-700 shrink-0 relative overflow-hidden group/thumb cursor-pointer flex items-center justify-center" onClick={() => setActiveVideo(activeSermon)}>
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/thumb:bg-black/40 transition-colors">
-                    <Youtube size={20} className="text-white opacity-80" />
-                  </div>
-                  <Mic2 size={24} className="text-white/20" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h4 className="font-bold text-black dark:text-white text-base truncate">{activeSermon.title}</h4>
-                  <p className="text-black/40 dark:text-white/40 text-[11px] uppercase font-black tracking-[0.2em] truncate">{activeSermon.speaker}</p>
-                </div>
-                <button onClick={() => setActiveSermon(null)} className="md:hidden p-2 text-black/40 hover:bg-black/5 rounded-full"><X size={20} /></button>
-              </div>
-
-              <div className="flex-1 w-full space-y-4">
-                <div className="flex items-center gap-5">
-                  <span className="text-[11px] font-mono font-bold text-black/40 dark:text-white/40 w-12 text-right">{formatTime(currentTime)}</span>
-                  <div className="flex-1 relative h-6 flex items-center">
-                    <input 
-                      type="range"
-                      min="0"
-                      max={duration || 100}
-                      value={currentTime}
-                      onChange={(e) => {
-                        const time = parseFloat(e.target.value);
-                        setCurrentTime(time);
-                        if (audioRef.current) audioRef.current.currentTime = time;
-                      }}
-                      className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full appearance-none cursor-pointer accent-blue-600 relative z-20"
-                    />
-                  </div>
-                  <span className="text-[11px] font-mono font-bold text-black/40 dark:text-white/40 w-12">{formatTime(duration)}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-8">
-                    <button onClick={() => { if (audioRef.current) audioRef.current.currentTime -= 15; }} className="text-black/40 dark:text-white/40 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"><SkipBack size={26} /></button>
-                    <button onClick={() => setIsPlaying(!isPlaying)} className="w-16 h-16 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-xl">
-                      {isPlaying ? <Pause size={28} className="fill-current" /> : <Play size={28} className="fill-current ml-1" />}
-                    </button>
-                    <button onClick={() => { if (audioRef.current) audioRef.current.currentTime += 15; }} className="text-black/40 dark:text-white/40 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"><SkipForward size={26} /></button>
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <div className="hidden sm:flex items-center gap-1.5 bg-black/5 dark:bg-white/5 p-1 rounded-xl">
-                      {[1, 1.5, 2].map(speed => (
-                        <button key={speed} className="px-3 py-1.5 rounded-lg text-[10px] font-black text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-all">
-                          {speed}x
-                        </button>
-                      ))}
-                    </div>
-                    <button className="p-2 text-black/40 dark:text-white/40 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"><Volume2 size={24} /></button>
-                  </div>
-                </div>
-              </div>
-              <button onClick={() => setActiveSermon(null)} className="hidden md:block p-3 text-black/20 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-full transition-all"><X size={24} /></button>
+              ))}
             </div>
           </div>
+
+          {/* Topic pills */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {allTags.map(t => (
+              <button
+                key={t}
+                onClick={() => setActiveTag(t)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                  activeTag === t
+                    ? 'bg-gold-500 text-white'
+                    : 'bg-gold-50 dark:bg-gold-900/20 text-gold-700 dark:text-gold-400 hover:bg-gold-100 dark:hover:bg-gold-900/40'
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
+          {filtered.length === 0 ? (
+            <div className="text-center py-16 text-navy-500 dark:text-navy-300">
+              <Search size={40} className="mx-auto mb-4 opacity-30" aria-hidden="true" />
+              <p>No sermons found — try adjusting your search or filters.</p>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtered.map(s => <SermonCard key={s.id} s={s} />)}
+            </div>
+          )}
         </div>
-      )}
+      </section>
+
+      {/* Podcast */}
+      <section className="py-20 px-6 bg-navy-DEFAULT dark:bg-navy-900 text-white text-center" aria-label="Podcast">
+        <div className="max-w-3xl mx-auto">
+          <Headphones className="w-12 h-12 text-gold-400 mx-auto mb-5" aria-hidden="true" />
+          <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">Take the Message With You</h2>
+          <p className="text-white/70 leading-relaxed mb-8">
+            Subscribe to the Lighthouse Gospel Church podcast and never miss a message —
+            available on Apple Podcasts, Spotify, and wherever you listen.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {['Apple Podcasts','Spotify','Google Podcasts','RSS Feed'].map(p => (
+              <button key={p} className="px-5 py-2.5 rounded-xl bg-white/10 border border-white/20 text-sm font-semibold hover:bg-white/20 transition-colors">
+                {p}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

@@ -1,15 +1,13 @@
-
 export interface Sermon {
   id: string;
   title: string;
   speaker: string;
   date: string;
   series: string;
-  youtubeId: string;
-  audioUrl?: string;
-  thumbnail?: string;
+  passage: string;
   duration?: string;
   featured?: boolean;
+  tag?: string;
 }
 
 export interface ChurchEvent {
@@ -19,7 +17,8 @@ export interface ChurchEvent {
   time: string;
   location: string;
   description: string;
-  category: 'Worship' | 'Community' | 'Youth' | 'Mission';
+  category: 'Worship' | 'Community' | 'Youth' | 'Prayer' | 'Missions';
+  recurring?: boolean;
 }
 
 export interface ServiceTime {
