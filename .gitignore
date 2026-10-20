@@ -20,3 +20,6 @@ pnpm-debug.log*
 Thumbs.db
 .vscode/
 .idea/
+
+# AI prompt history (removed from tree; still in git history)
+migrated_prompt_history/
